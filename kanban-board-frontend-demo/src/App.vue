@@ -68,7 +68,30 @@ export default {
 				})
 		},
 		indexUpdated() {
+			setTimeout(() => {
+				this.updateCardOrder();
+			}, 500);
 			
+		},
+		updateCardOrder(){
+			var data = [];
+			for(var c=0; c<this.columns.length; c++){
+				var cards = [];
+				for(var i=0; i<this.columns[c].cards.length; i++){
+					//console.log('--'+this.columns[c].cards[i].title);
+					cards.push({index: i, id: this.columns[c].cards[i].id, title: this.columns[c].cards[i].title})
+				}
+				data.push({id:this.columns[c].id, cards: cards});
+			}	
+			axios.post(process.env.VUE_APP_API_HOST + 'column/card/update/index', {
+                    'data': data
+                })
+                .then( response => {
+                    console.log(response);
+                })
+                .catch( error => {
+                    console.log(error);
+                })
 		}
   	},
 	created(){

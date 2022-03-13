@@ -17,8 +17,6 @@
                 class="draggable-list"
                 ghost-class="moving-card"
                 filter=".action-button"
-                :change="changed"
-                :ended="ended"
                 :data-section="column.id"
                 :list="column.cards"
                 :animation="200"
@@ -101,63 +99,8 @@ export default {
                 } }
             )
         },
-        ended(e){
-            console.log('Ented');
-            console.log(e);
-        },
-        changed(e){
-            console.log('Chaned');
-            console.log(e);
-        },
         onMove(evt) {
-            // console.log(evt);
-            //this.$emit("index-updated");
-            // console.log(evt);
-            // console.log(
-            //     'move from section: ' +
-            //     evt.from.dataset.section +
-            //     ' index: ' +
-            //     evt.draggedContext.index +
-            //     ' to section: ' +
-            //     evt.to.dataset.section +
-            //     ' index: ' +
-            //     evt.draggedContext.futureIndex
-            // )
-
-            var cid = evt.draggedContext.element.id
-            axios.put(process.env.VUE_APP_API_HOST + 'column/card/update/index/' + cid, {
-                    'from_column': evt.from.dataset.section,
-                    'from_index': evt.draggedContext.index,
-                    'to_column': evt.to.dataset.section,
-                    'to_index': evt.draggedContext.futureIndex
-                })
-                .then( response => {
-                    console.log(response);
-                })
-                .catch( error => {
-                    console.log(error);
-                })
-            //  var ids = [];
-
-            // console.log(e.relatedContext.list.length);
-            
-            // for(var i=0; i<evt.relatedContext.list.length; i++){
-            //     var _new_index = i;
-            //     if(evt.from.dataset.section == evt.to.dataset.section){
-            //         if(evt.draggedContext.futureIndex == i){
-            //             _new_index = evt.draggedContext.index;
-            //         }
-            //         if(evt.draggedContext.index == i){
-            //             _new_index = evt.draggedContext.futureIndex;
-            //         }
-            //     }
-            //     ids.push({index: _new_index, title: evt.relatedContext.list[i].title});
-            // }
-            // console.log(ids);
-            // console.log(this.column);
-            // debugger;
-            // window.console.log("Future index: " + e.draggedContext.futureIndex);
-            // axios.put()  
+            this.$emit("index-updated");
         },
     }
 }   

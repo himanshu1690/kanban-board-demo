@@ -71,30 +71,21 @@ class ColumnController extends Controller
     }
 
     /**
-     * PUT - update card index
+     * POST - update card index
      * @param Request $request
-     * @param Card $card
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateCardIndex(Request $request, Card $card){
-
-        $total = Card::where('column_id', $request->to_column)->count();
-        if($total > $request->to_index){
-
+    public function updateCardIndex(Request $request){
+        $data = $request->data;
+        foreach ($data as $col){
+            $cid = $col['id'];
+            foreach ($col['cards'] as $card){
+                Card::where('id', $card['id'])->update([
+                    'column_id' => $cid,
+                    'card_index' => $card['index']
+                ]);
+            }
         }
-        $cards = Card::where('column_id', $request->to_column)->where('card_index', '>=', $request->to_index)->get();
-        Log::debug('[CARDS]', [$cards]);
-        $i = $request->to_index + 1;
-        Log::debug('[CARDS]', [$i]);
-        foreach ($cards as $c){
-            $c->card_index = $i;
-            $c->save();
-            $i++;
-        }
-        Log::debug('[CARDS]', [Card::where('column_id', $request->to_column)->get()]);
-        $card->card_index = $request->to_index;
-        $card->column_id = $request->to_column;
-        $card->save();
         return response()->json(['status'=>true, 'msg'=>'Card updated!']);
     }
 

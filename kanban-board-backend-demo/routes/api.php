@@ -28,4 +28,4 @@ Route::delete('/column/delete/{column}', [\App\Http\Controllers\API\ColumnContro
 Route::post('/column/{column}/card/create', [\App\Http\Controllers\API\ColumnController::class, 'createCard']);
 Route::put('/column/card/update/{card}', [\App\Http\Controllers\API\ColumnController::class, 'updateCard']);
 Route::delete('/column/card/delete/{card}', [\App\Http\Controllers\API\ColumnController::class, 'deleteCard']);
-Route::put('/column/card/update/index/{card}', [\App\Http\Controllers\API\ColumnController::class, 'updateCardIndex']);
+Route::post('/column/card/update/index', [\App\Http\Controllers\API\ColumnController::class, 'updateCardIndex']);
